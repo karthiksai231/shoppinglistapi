@@ -12,6 +12,7 @@ namespace shoppinglistapi.Data
         public DbSet<User> User { get; set; }
         public DbSet<ShoppingList> ShoppingList { get; set; }
         public DbSet<Store> Store { get; set; }
+        public DbSet<Item> Item { get; set; }
 
     }
 }

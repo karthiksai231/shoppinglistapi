@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace shoppinglistapi.Models
 {
@@ -9,5 +10,6 @@ namespace shoppinglistapi.Models
         public bool IsCompleted { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
+        public ICollection<Item> Items { get; set; }
     }
 }

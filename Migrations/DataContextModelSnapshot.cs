@@ -16,6 +16,26 @@ namespace shoppinglistapi.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
+            modelBuilder.Entity("shoppinglistapi.Models.Item", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("ItemName");
+
+                    b.Property<int>("ShoppingListId");
+
+                    b.Property<DateTime>("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ShoppingListId");
+
+                    b.ToTable("Item");
+                });
+
             modelBuilder.Entity("shoppinglistapi.Models.ShoppingList", b =>
                 {
                     b.Property<int>("Id")
@@ -62,6 +82,14 @@ namespace shoppinglistapi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("shoppinglistapi.Models.Item", b =>
+                {
+                    b.HasOne("shoppinglistapi.Models.ShoppingList")
+                        .WithMany("Items")
+                        .HasForeignKey("ShoppingListId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("shoppinglistapi.Models.ShoppingList", b =>

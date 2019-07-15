@@ -9,7 +9,7 @@ using shoppinglistapi.Data;
 namespace shoppinglistapi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190714152758_InitialCreate")]
+    [Migration("20190715230818_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -17,6 +17,26 @@ namespace shoppinglistapi.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
+
+            modelBuilder.Entity("shoppinglistapi.Models.Item", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("ItemName");
+
+                    b.Property<int>("ShoppingListId");
+
+                    b.Property<DateTime>("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ShoppingListId");
+
+                    b.ToTable("Item");
+                });
 
             modelBuilder.Entity("shoppinglistapi.Models.ShoppingList", b =>
                 {
@@ -64,6 +84,14 @@ namespace shoppinglistapi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("shoppinglistapi.Models.Item", b =>
+                {
+                    b.HasOne("shoppinglistapi.Models.ShoppingList")
+                        .WithMany("Items")
+                        .HasForeignKey("ShoppingListId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("shoppinglistapi.Models.ShoppingList", b =>

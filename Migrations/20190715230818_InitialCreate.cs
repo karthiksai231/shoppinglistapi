@@ -57,6 +57,33 @@ namespace shoppinglistapi.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Item",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ItemName = table.Column<string>(nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedDate = table.Column<DateTime>(nullable: false),
+                    ShoppingListId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Item", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Item_ShoppingList_ShoppingListId",
+                        column: x => x.ShoppingListId,
+                        principalTable: "ShoppingList",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Item_ShoppingListId",
+                table: "Item",
+                column: "ShoppingListId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_ShoppingList_UserId",
                 table: "ShoppingList",
@@ -66,10 +93,13 @@ namespace shoppinglistapi.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ShoppingList");
+                name: "Item");
 
             migrationBuilder.DropTable(
                 name: "Store");
+
+            migrationBuilder.DropTable(
+                name: "ShoppingList");
 
             migrationBuilder.DropTable(
                 name: "User");
