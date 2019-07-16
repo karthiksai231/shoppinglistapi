@@ -43,9 +43,9 @@ namespace shoppinglistapi.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<string>("Description");
-
                     b.Property<bool>("IsCompleted");
+
+                    b.Property<string>("Name");
 
                     b.Property<DateTime>("UpdatedDate");
 

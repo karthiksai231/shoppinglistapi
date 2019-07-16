@@ -9,7 +9,7 @@ using shoppinglistapi.Data;
 namespace shoppinglistapi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190715230818_InitialCreate")]
+    [Migration("20190716003038_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,9 +45,9 @@ namespace shoppinglistapi.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<string>("Description");
-
                     b.Property<bool>("IsCompleted");
+
+                    b.Property<string>("Name");
 
                     b.Property<DateTime>("UpdatedDate");
 
