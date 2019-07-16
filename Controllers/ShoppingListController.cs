@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using shoppinglistapi.Data;
@@ -10,10 +11,10 @@ namespace shoppinglistapi.Controllers
     [ApiController]
     public class ShoppingListController : ControllerBase
     {
-        private readonly IShoppingListRepository _shoppingListRepository;
-        public ShoppingListController(IShoppingListRepository shoppingListRepository)
+        private readonly IUserRepository _userRepository;
+        public ShoppingListController(IUserRepository userRepository)
         {
-            _shoppingListRepository = shoppingListRepository;
+            _userRepository = userRepository;
 
         }
         [HttpPost("create")]
@@ -22,10 +23,11 @@ namespace shoppinglistapi.Controllers
             var shoppingListToCreate = new ShoppingList
             {
                 Name = shoppingListDto.Name,
-                
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now
             };
 
-            var createdUser = await _shoppingListRepository.CreateShoppingListAsync(shoppingListToCreate);
+            var createdUser = await _userRepository.CreateShoppingListAsync(shoppingListToCreate, 1);
             return Ok();
         }
     }

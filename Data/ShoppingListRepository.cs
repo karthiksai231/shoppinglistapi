@@ -6,8 +6,10 @@ namespace shoppinglistapi.Data
     public class ShoppingListRepository : IShoppingListRepository
     {
         private readonly DataContext _dataContext;
-        public ShoppingListRepository(DataContext dataContext)
+        private readonly IUserRepository _userRepository;
+        public ShoppingListRepository(DataContext dataContext, IUserRepository userRepository)
         {
+            _userRepository = userRepository;
             _dataContext = dataContext;
         }
 
@@ -26,11 +28,11 @@ namespace shoppinglistapi.Data
             return await _dataContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<ShoppingList> CreateShoppingListAsync(ShoppingList shoppingList)
+        public async Task<ShoppingList> CreateShoppingListAsync(ShoppingList shoppingList, int userId)
         {
-            // var user = await _dataContext.GetUser(userId);
-            await _dataContext.ShoppingList.AddAsync(shoppingList);
-            await _dataContext.SaveChangesAsync();
+            var user = await _userRepository.GetUser(userId);
+            user.ShoppingLists.Add(shoppingList);
+            await SaveAll();
 
             return shoppingList;
         }

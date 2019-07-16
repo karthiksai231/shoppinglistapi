@@ -24,7 +24,7 @@ namespace shoppinglistapi.Data
 
         public async Task<User> GetUser(int id)
         {
-            var user = await _dataContext.User.FirstOrDefaultAsync(u => u.Id == id);
+            var user = await _dataContext.User.Include(l => l.ShoppingLists).FirstOrDefaultAsync(u => u.Id == id);
 
             return user;
         }
@@ -40,6 +40,15 @@ namespace shoppinglistapi.Data
             await _dataContext.SaveChangesAsync();
 
             return user;
+        }
+
+        public async Task<ShoppingList> CreateShoppingListAsync(ShoppingList shoppingList, int userId)
+        {
+            var user = await GetUser(userId);
+            user.ShoppingLists.Add(shoppingList);
+            await SaveAll();
+
+            return shoppingList;
         }
     }
 }
